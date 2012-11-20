@@ -67,7 +67,8 @@ DEBUG = False
 
 # IRC Server Configuration
 SERVER = "irc.freenode.net"
-PORT = 6667
+PORT = 6667 # SSL: 6697
+SSL = False # SSL: True
 SERVER_PASS = None
 CHANNELS=["#excid3","#keryx"]
 NICK = "timber"
@@ -209,10 +210,10 @@ def replace_color(code, text):
 ### Logbot class
 
 class Logbot(SingleServerIRCBot):
-    def __init__(self, server, port, server_pass=None, channels=[],
+    def __init__(self, server, port, ssl=False, server_pass=None, channels=[],
                  nick="timber", nick_pass=None, format=default_format):
         SingleServerIRCBot.__init__(self,
-                                    [(server, port, server_pass)],
+                                    [(server, port, ssl, server_pass)],
                                     nick,
                                     nick)
 
@@ -449,7 +450,7 @@ def main():
         write_string("%s/index.html" % LOG_FOLDER, html_header.replace("%title%", "Chat Logs"))
 
     # Start the bot
-    bot = Logbot(SERVER, PORT, SERVER_PASS, CHANNELS, NICK, NICK_PASS)
+    bot = Logbot(SERVER, PORT, SSL, SERVER_PASS, CHANNELS, NICK, NICK_PASS)
     try:
         # Connect to FTP
         if FTP_SERVER:

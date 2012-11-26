@@ -139,7 +139,7 @@ html_header = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   </head>
   <body>
   <h1>%title%</h1>
-  <p>(all times UTC)</p>
+  <p>(all times UTC; contact <a href="https://twitter.com/mtigas">mtigas</a> for assistance)</p>
   <a href="..">Back</a><br />
   </body>
 </html>

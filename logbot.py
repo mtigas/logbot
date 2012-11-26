@@ -59,26 +59,30 @@ pat1 = re.compile(r"(^|[\n ])(([\w]+?://[\w\#$%&~.\-;:=,?@\[\]+]*)(/[\w\#$%&~/.\
 #urlfinder = re.compile("(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))")
 
 def urlify2(value):
-    return pat1.sub(r'\1<a href="\2" target="_blank">\3</a>', value)
+    return pat1.sub(r'\1<a href="\2" target="_blank">\2</a>', value)
     #return urlfinder.sub(r'<a href="\1">\1</a>', value)
 
 ### Configuration options
 DEBUG = False
 
+##### THE FOLLOWING LIVE IN `logbot_settings.py` #####
 # IRC Server Configuration
-SERVER = "irc.freenode.net"
-PORT = 6667 # SSL: 6697
-SSL = False # SSL: True
-SERVER_PASS = None
-CHANNELS=["#excid3","#keryx"]
-NICK = "timber"
-NICK_PASS = ""
+#SERVER = "irc.mozilla.org"
+#PORT = 6697
+#SSL = True
+#SERVER_PASS = None
+#CHANNELS=["#opennews",]
+#NICK = ""
+#NICK_PASS = ""
 
 # The local folder to save logs
-LOG_FOLDER = "logs"
+#LOG_FOLDER = "logs"
 
 # The message returned when someone messages the bot
-HELP_MESSAGE = "Check out http://excid3.com"
+#HELP_MESSAGE = "https://github.com/mtigas/logbot"
+##### / END `logbot_settings.py` #####
+from logbot_settings import (SERVER, PORT, SSL, SERVER_PASS, CHANNELS, NICK,
+    NICK_PASS, LOG_FOLDER, HELP_MESSAGE)
 
 # FTP Configuration
 FTP_SERVER = ""
@@ -135,6 +139,7 @@ html_header = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   </head>
   <body>
   <h1>%title%</h1>
+  <p>(all times UTC)</p>
   <a href="..">Back</a><br />
   </body>
 </html>
@@ -272,7 +277,8 @@ class Logbot(SingleServerIRCBot):
             chans = [chans]
 
         for chan in chans:
-            self.append_log_msg(chan, msg)
+            if name in frozenset(['topic', 'action', 'pubmsg', 'pubnotice']):
+                self.append_log_msg(chan, msg)
 
         self.count += 1
 

@@ -139,7 +139,8 @@ html_header = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   </head>
   <body>
   <h1>%title%</h1>
-  <p>(all times UTC; logbot source: <a href="https://github.com/mtigas/logbot">github.com/mtigas/logbot</a>; contact <a href="https://twitter.com/mtigas">mtigas</a> for assistance)</p>
+  <p><a href="http://mozillaopennews.org/">Mozilla OpenNews</a> | Logs for #OpenNews on <a href="http://irc.mozilla.org/">irc.mozilla.org</a><br>Logbot source: <a href="https://github.com/mtigas/logbot">github.com/mtigas/logbot</a></p>
+  <p>Contact <a href="https://twitter.com/mtigas">mtigas</a> for logbot assistance. All times UTC.</p>
   <a href="..">Back</a><br />
   </body>
 </html>

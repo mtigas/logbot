@@ -149,7 +149,7 @@ html_header = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   <h1>%title%</h1>
   <p><a href="http://mozillaopennews.org/">Mozilla OpenNews</a> | Logs for #OpenNews on <a href="http://irc.mozilla.org/">irc.mozilla.org</a><br>Logbot source: <a href="https://github.com/mtigas/logbot">github.com/mtigas/logbot</a></p>
   <p>Contact <a href="https://twitter.com/mtigas">mtigas</a> for logbot assistance. All times UTC.</p>
-  <a href="..">Back</a><br />
+  <b><a href="..">Back To Index</a></b><br />
   </body>
 </html>
 """
@@ -351,7 +351,7 @@ class Logbot(SingleServerIRCBot):
 
         # Create the log date index if it doesnt exist
         if not os.path.exists(log_path):
-            write_string(log_path, html_header.replace("%title%", "%s | Logs for %s" % (channel_title, date)))
+            write_string(log_path, html_header.replace("%title%", "<a href='http://opennews-irc.yu8.in/'>%s</a> | Logs for %s" % (channel_title, date)))
 
             # Append date log
             append_line("%s/index.html" % chan_path, '<a href="%s.html">%s</a>' % (date, date))

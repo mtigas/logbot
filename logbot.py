@@ -54,9 +54,13 @@ from irclib import nm_to_n
 
 import re
 
+striptagsre = re.compile(r'<[^>]*?>')
 pat1 = re.compile(r"(^|[\n ])(([\w]+?://[\w\#$%&~.\-;:=,?@\[\]+]*)(/[\w\#$%&~/.\-;:=,?@\[\]+]*)?)", re.IGNORECASE | re.DOTALL)
 
 #urlfinder = re.compile("(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))")
+
+def striptags(value):
+    return striptagsre.sub('', value)
 
 def urlify2(value):
     return pat1.sub(r'\1<a href="\2" target="_blank">\2</a>', value)
@@ -115,6 +119,7 @@ html_header = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="NOINDEX, NOFOLLOW" />
     <title>%title%</title>
     <style type="text/css">
         body {
@@ -333,7 +338,7 @@ class Logbot(SingleServerIRCBot):
             os.makedirs(chan_path)
 
             # Create channel index
-            write_string("%s/index.html" % chan_path, html_header.replace("%title%", "%s | Logs" % channel_title))
+            write_string("%s/index.html" % chan_path, html_header.replace("%title%", striptags("%s | Logs" % channel_title)))
 
             # Append channel to log index
             append_line("%s/index.html" % LOG_FOLDER, '<a href="%s/index.html">%s</a>' % (channel.replace("#", "%23"), channel_title))

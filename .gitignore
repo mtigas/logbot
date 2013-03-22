@@ -1,5 +1,6 @@
 logbot_settings.py
 s3_settings.py
+logs
 
 .svn/
 *.pyc

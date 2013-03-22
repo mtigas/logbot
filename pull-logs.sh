@@ -8,7 +8,7 @@ ssh ${SSHSERVER} "cd /home/ubuntu/logbot;tar -cvjf /home/ubuntu/${LOGTARBALL} lo
 scp -rp "${SSHSERVER}:/home/ubuntu/${LOGTARBALL}" "/tmp/${LOGTARBALL}"
 
 cd $HOME/Code/logbot
-tar -xjf /tmp/$LOGTARBALL logs
+tar -xjf /tmp/$LOGTARBALL
 
 # Upload & replace server log files
 

@@ -185,9 +185,9 @@ def upload_file(local_file, bucket, remote_path, cache_time=0, policy="public-re
         "Content-Type" : content_type,
     }
     encrypt_key = False
-    #if (policy != "public-read"):
-    #    print "encryption on"
-    #    encrypt_key = True
+    if (policy != "public-read"):
+        #print "encryption on"
+        encrypt_key = True
     if force_download:
         basic_headers["Content-Disposition"] = "attachment; filename=%s"% os.path.basename(local_file)
 

@@ -49,7 +49,7 @@ def upload_dir(local_dir,remote_dir,bucket,bucket_url=None):
                 (remotefile.find('.DS_Store') == -1) and \
                 (remotefile.find('.pyo') == -1) and \
                 (remotefile.find('.pyc') == -1):
-                    s3up.upload_file(fullfile,bucket,remotefile)
+                    s3up.upload_file(fullfile, bucket, remotefile, cache_time=0, policy="private")
                     if not bucket_url:
                         print "https://s3.amazonaws.com/%s/%s" % (bucket,remotefile)
                     else:

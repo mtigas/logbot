@@ -184,10 +184,9 @@ def upload_file(local_file, bucket, remote_path, cache_time=0, policy="public-re
     basic_headers = {
         "Content-Type" : content_type,
     }
-    encrypt_key = False
-    if (policy != "public-read"):
-        #print "encryption on"
-        encrypt_key = True
+    #if (policy != "public-read"):
+    #    #print "encryption on"
+    #    #encrypt_key = True
     if force_download:
         basic_headers["Content-Disposition"] = "attachment; filename=%s"% os.path.basename(local_file)
 
@@ -200,9 +199,11 @@ def upload_file(local_file, bucket, remote_path, cache_time=0, policy="public-re
     fstat = os.stat(local_file)
     fsize = fstat.st_size
     
-    mp_key = bucket.initiate_multipart_upload(remote_path, headers=basic_headers,
-        encrypt_key=encrypt_key
-    )
+    initiate_headers = basic_headers.copy()
+    if (policy != "public-read"):
+        initiate_headers["x-amz-server-side-encryption"] = "AES256"
+        initiate_headers['x-amz-storage-class'] = 'REDUCED_REDUNDANCY'
+    mp_key = bucket.initiate_multipart_upload(remote_path, headers=initiate_headers)
     
     active_threads = []
     try:

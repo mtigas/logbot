@@ -13,12 +13,12 @@ This is a simple Python-based log bot that tracks #opennews on
 [IRC.Mozilla](http://irc.mozilla.org/).
 
 This bot runs persistently on an EC2 server (in a `screen` session because of
-laziness), with a minutely cron job that runs the `s3dir.py` utility to upload
+laziness), with a 15 minute cron job that runs the `s3dir.py` utility to upload
 the logs to S3:
 
 ```shell
 # m h  dom mon dow   command
-  * *  *   *   *     python /home/ubuntu/logbot/s3dir.py >> /home/ubuntu/s3log.txt
+  */15 *  *   *   *     python /home/ubuntu/logbot/s3dir.py >> /home/ubuntu/s3log.txt
 ```
 
 The S3 bucket is configured to use “website mode” and given the
